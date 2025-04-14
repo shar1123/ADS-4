@@ -26,7 +26,7 @@ int countPairs2(int *arr, int len, int value) {
   }
   return k;
 }
-bool binary(int* arr, int l, int r, int target, bool fl) {
+int binary(int* arr, int l, int r, int target, bool fl) {
   int result = -1;
   while (l <= r) {
     int mid = l/2 + r/ 2;
