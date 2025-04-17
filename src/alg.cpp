@@ -14,45 +14,45 @@ int countPairs2(int *arr, int len, int value) {
   int l = 0;
   int r = len - 1;
   for (int i = 0; i < r; i++) {
-    for (int j = r-1; j > l; j++) {
+    for (int j = r - 1; j > l; j--) {
       if (arr[j] > value) {
-        r--;
+        r -= 1;
       }
       if (arr[i] + arr[j] == value) {
-        k++;
+        k += 1;
       }
     }
-    l++;
+    l += 1;
   }
   return k;
-}
-int binary(int* arr, int l, int r, int target, bool fl) {
-  int result = -1;
-  while (l <= r) {
-    int mid = l/2 + r/ 2;
-    if (arr[mid] == target) {
-      result = mid;
-      if (fl) {
-        r = mid - 1;
-      } else {
-        l = mid + 1;
-      }
-    } else if (arr[mid] < target) {
-      l = mid + 1;
-    } else {
-      r = mid - 1;
-    }
-  }
-  return result;
 }
 int countPairs3(int* arr, int len, int value) {
   int k = 0;
   for (int i = 0; i < len; ++i) {
     int target = value - arr[i];
-    int first = binary(arr, i + 1, len - 1, target, true);
-    if (first != -1) {
-      int last = binary(arr, first, len - 1, target, false);
-      k += last - first + 1;
+    int left = i + 1;
+    int right = len - 1;
+    while (left <= right) {
+      int mid = left/2 + right/ 2;
+      if (arr[mid] == target) {
+        int countSame = 1;
+        int l = mid - 1;
+        while (l > i && arr[l] == target) {
+          countSame++;
+          l--;
+        }
+        int r = mid + 1;
+        while (r < len && arr[r] == target) {
+          countSame++;
+            r++;
+        }
+        k += countSame;
+        break;
+      } else if (arr[mid] < target) {
+        left = mid + 1;
+      } else {
+        right = mid - 1;
+      }
     }
   }
   return k;
